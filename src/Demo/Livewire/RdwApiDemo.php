@@ -283,7 +283,7 @@ class RdwApiDemo extends Component implements HasForms
             ->setLicense($this->licenseplate)
             ->setEndpoints($this->endpoints)
             ->translate($this->language)
-            ->convert($this->output_format)
+            ->format($this->output_format)
             ->fetch();
     }
 
