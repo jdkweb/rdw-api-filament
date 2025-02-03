@@ -18,10 +18,10 @@ Install the package via composer:
 composer require jdkweb/rdw-api-filament
 ```
 ## Translation
-[See](https://github.com/jdkweb/rdw-api?tab=readme-ov-file#translation)
+[See jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=readme-ov-file#translation)
 
 ## Usage
-![filament setup](https://www.jdkweb.nl/assets/images/github/rdw-api-filament1.png)
+![filament setup](./images/rdw-api-filament1.png)
 ```php
 use Jdkweb\Rdw\Enums\Endpoints;
 use Jdkweb\Rdw\Enums\OutputFormat;
