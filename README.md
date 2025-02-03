@@ -49,3 +49,53 @@ Forms\Components\Select::make('output_format')
     ->required()
     ->options(OutputFormat::getOptions())
 ```
+### RdwApiLicenseplate Options
+#### Preset for Dutch licenseplate style
+```php
+->licenseplateStyle()
+```
+#### Endpoints selected
+When the options field RdwApiSelectDataset is not used 
+```php
+->dataSet(['vehicle','fuel'])
+```
+Options for endpoints (not case sensitive):
+- vehicle
+- vehicle_class
+- fuel
+- bodywork
+- bodywork_specific
+- axles 
+- all
+- 
+#### Format of the response output
+```php  
+->outputFormat('array')
+```
+### RdwApiSelectDataset Options
+#### Available endpoints to select
+```php
+->dataSet('all') # show all datasets
+->dataSet(['vehicle','fuel']) # show only vehicle and fuel
+```
+Options for endpoints (not case sensitive):
+- vehicle
+- vehicle_class
+- fuel
+- bodywork
+- bodywork_specific
+- axles 
+- all
+#### Preset selection
+```php
+->setDefault(['vehicle'])
+->setDefault(fn() => (request()->ip() == '192.168.1.1' ? 'vehicle' : 'all'))
+```
+#### Use shortnames for RDW datasets
+```php
+->shortname(true) // 'Vehicles' instead of 'Registered vehicles'
+```
+#### Show select all link
+```php
+->showSelectAll()
+```
