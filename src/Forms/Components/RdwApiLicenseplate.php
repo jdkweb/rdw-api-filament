@@ -20,6 +20,7 @@ class RdwApiLicenseplate extends TextInput
 
     protected string|\Closure|null $language = 'nl';
 
+    //------------------------------------------------------------------------------------------------------------------
 
     final protected function setUp(): void
     {
@@ -32,11 +33,15 @@ class RdwApiLicenseplate extends TextInput
         parent::setUp();
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     final public function dataSet(string|array|Endpoints|\Closure|null $dataset = null): static
     {
         $this->dataset = $dataset;
         return $this;
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     final public function getDataset(): array
     {
@@ -52,28 +57,6 @@ class RdwApiLicenseplate extends TextInput
         return $this->dataset;
     }
 
-//    public function afterStateUpdated(?Closure $callback, array $namedInjections = [], array $typedInjections = []): static
-//    {
-//
-////        dd((new \ReflectionFunction($callback))->getParameters());
-////        dd($callback);
-//
-////        $dependencies = [];
-////        $result_return_function_name = null;
-////
-////        foreach ((new \ReflectionFunction($callback))->getParameters() as $parameter) {
-////            $dependencies[] = $this->resolveClosureDependencyForEvaluation($parameter, $namedInjections, $typedInjections);
-////        }
-//
-//        // Add Rdw Api
-//        //$dependencies['rdwApiResponse'] = $this->rdwApiRequest('HX084B');
-//
-//
-//        $this->afterStateUpdated[] = $callback;
-//
-//        return $this;
-//    }
-
     //------------------------------------------------------------------------------------------------------------------
 
     /**
@@ -88,38 +71,38 @@ class RdwApiLicenseplate extends TextInput
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \ReflectionException
      */
-    final public function responseHandler(mixed $value, array $namedInjections = [], array $typedInjections = []): static
-    {
-        if (! $value instanceof \Closure) {
-            return $value;
-        }
-
-        $dependencies = [];
-        $result_return_function_name = null;
-
-        foreach ((new \ReflectionFunction($value))->getParameters() as $parameter) {
-            if(!in_array($parameter->getName(), ['state','set','get','component', 'record', 'livewire', 'operation','request'])) {
-                $result_return_function_name = $parameter->getName();
-                continue;
-            }
+//    final public function responseHandler(mixed $value, array $namedInjections = [], array $typedInjections = []): static
+//    {
+//        if (! $value instanceof \Closure) {
+//            return $value;
+//        }
+//
+//        $dependencies = [];
+//        $result_return_function_name = null;
+//
+//        foreach ((new \ReflectionFunction($value))->getParameters() as $parameter) {
+//            if(!in_array($parameter->getName(), ['state','set','get','component', 'record', 'livewire', 'operation','request'])) {
+//                $result_return_function_name = $parameter->getName();
+//                continue;
+//            }
 //            if(!in_array($parameter->getName(), ['set','get'])) {
 //                continue;
 //            }
-            $dependencies[] = $this->resolveClosureDependencyForEvaluation($parameter, $namedInjections, $typedInjections);
-        }
-
-        if (is_string($this->dataset)) {
-            $this->dataset = [$this->dataset];
-        }
-
-        $this->live(true)
-            ->afterStateUpdated(function (string $state) use ($value, $dependencies, $result_return_function_name) {
-                $dependencies[$result_return_function_name] = $this->rdwApiRequest($state);
-                return $value(...$dependencies);
-            });
-
-        return $this;
-    }
+//            $dependencies[] = $this->resolveClosureDependencyForEvaluation($parameter, $namedInjections, $typedInjections);
+//        }
+//
+//        if (is_string($this->dataset)) {
+//            $this->dataset = [$this->dataset];
+//        }
+//
+//        $this->live(true)
+//            ->afterStateUpdated(function (string $state) use ($value, $dependencies, $result_return_function_name) {
+//                $dependencies[$result_return_function_name] = $this->rdwApiRequest($state);
+//                return $value(...$dependencies);
+//            });
+//
+//        return $this;
+//    }
 
     //------------------------------------------------------------------------------------------------------------------
 
@@ -159,6 +142,8 @@ class RdwApiLicenseplate extends TextInput
         return $this;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     final public function getOutputFormat(): OutputFormat
     {
         $format = $this->evaluate($this->outputFormat);
@@ -185,6 +170,8 @@ class RdwApiLicenseplate extends TextInput
         $this->language = $language ?? app()->getLocale();
         return $this;
     }
+
+    //------------------------------------------------------------------------------------------------------------------
 
     final public function getLanguage(): string
     {

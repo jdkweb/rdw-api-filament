@@ -4,6 +4,7 @@ namespace Jdkweb\Rdw\Filament\Demo\Livewire;
 
 use Filament\Forms;
 use Filament\Forms\Form;
+use Jdkweb\Rdw\Controllers\RdwApiRequest;
 use Jdkweb\Rdw\Enums\Endpoints;
 use Jdkweb\Rdw\Enums\OutputFormat;
 use Jdkweb\Rdw\Controllers\RdwApiResponse;
@@ -32,9 +33,19 @@ trait RdwApiExampleForm3
                             ->required()
                             ->forceTranslation(fn($get) => app()->getLocale())
                             ->licenseplateStyle('taxi')
-                            ->responseHandler(function (Forms\Get $get, Forms\Set $set, RdwApiResponse $resultObject)  {
-                                if($resultObject->status === false) return;
-                                $this->results = $resultObject->response;
+                            ->live(true)
+                            ->afterStateUpdated(function($state, Forms\Set $set) use ($form) {
+
+                                $result = RdwApiRequest::make()
+                                    ->setFormData($form)
+                                    ->rdwApiRequest()
+                                    ->get();
+
+                                if($result->status === false) return;
+
+                                // Render result
+                                $this->livewireOutput($result);
+
                             }),
                         Forms\Components\Select::make('taxidataset_disabled')
                             ->label(__('rdw-api::form.selectdatasetLabel'))
