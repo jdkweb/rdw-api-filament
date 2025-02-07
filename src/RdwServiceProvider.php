@@ -9,6 +9,9 @@ class RdwServiceProvider extends ServiceProvider
 {
     final public function boot():void
     {
+        require __DIR__ ."/Helpers/RdwApiHelpers.php";
+
+
         // Demo route on and local
         if((config('rdw-api.rdw_api_demo') || env('RDW_API_DEMO')) && env('APP_ENV') === 'local' ) {
             // Filament demo routes

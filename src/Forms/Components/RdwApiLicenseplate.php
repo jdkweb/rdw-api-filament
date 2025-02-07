@@ -2,164 +2,93 @@
 
 namespace Jdkweb\Rdw\Filament\Forms\Components;
 
-use Filament\Forms\Components\Select;
+use Closure;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
-use Illuminate\Contracts\View\View;
-use Illuminate\View\ComponentAttributeBag;
+use Jdkweb\Rdw\Controllers\RdwApiRequest;
+use Jdkweb\Rdw\Controllers\RdwApiResponse;
 use Jdkweb\Rdw\Enums\Endpoints;
 use Jdkweb\Rdw\Enums\OutputFormat;
 
+
 class RdwApiLicenseplate extends TextInput
 {
-    public string $prefix = 'plate_';
-
     protected string $regexLicensePlate = "/(\w{2}-?\d{2}-?\d{2})|(\d{2}-?\d{2}-?\w{2})|(\d{2}-?\w{2}-?\d{2})|(\w{2}-?\d{2}-?\w{2})|(\w{2}-?\w{2}-?\d{2})|(\d{2}-?\w{2}-?\w{2})|(\d{2}-?\w{3}-?\d{1})|(\d{1}-?\w{3}-?\d{2})|(\w{2}-?\d{3}-?\w{1})|(\w{1}-?\d{3}-?\w{2})|(\w{3}-?\d{2}-?\w{1})|(\d{1}-?\w{2}-?\d{3})/i";
 
-    protected string|\Closure $outputFormat = 'array';
+    protected string|OutputFormat|\Closure $outputFormat = 'array';
 
-    protected string|array|\Closure|null $dataset = null;
+    protected string|array|Endpoints|\Closure $dataset = [];
 
     protected string|\Closure|null $language = 'nl';
 
-    // protected string $license_plate_tailwind_style = 'bg-yellow-300 font-bold border border-black border-l-[42px] border-l-blue-700';
 
-    //private string|\Closure|null $useDatasetSelector = null;
-
-    //public $parent;
-
-    //protected RdwApiSelectDataset $selectDataset;
-
-
-    protected function setUp(): void
+    final protected function setUp(): void
     {
-        $this->maxLength = 8;
-        $this->minLength = 6;
+        $this->maxLength = 8;                   // 52-BVL-9
+        $this->minLength = 6;                   // 52BVL9
         $this->regex($this->regexLicensePlate);
         $this->language = app()->getLocale();
-        $this->dataset = Endpoints::names();
+        $this->dataset = Endpoints::cases();    // ['VEHICLE','VEHICLE_CLASS','FUEL','BODYWORK','BODYWORK_SPECIFIC','AXLES']
 
         parent::setUp();
     }
 
-
-    /**
-     * Set output format Json | array | xml
-     *
-     * @param  string|\Closure  $type
-     * @return $this
-     */
-    public function outputFormat(string|\Closure $type = 'array'): static
-    {
-        $this->outputFormat = $type;
-        return $this;
-    }
-
-    public function dataSet(string|array|\Closure|null $dataset = null): static
+    final public function dataSet(string|array|Endpoints|\Closure|null $dataset = null): static
     {
         $this->dataset = $dataset;
-
-        // check string
-        if (is_string($dataset)) {
-            $this->dataset = [$dataset];
-        }
-
-        // check string
-        if (is_null($dataset) || empty($dataset) || is_array($dataset) && strtoupper($dataset[0]) == 'ALL') {
-            $this->dataset = Endpoints::names();
-        }
-
-        // Accept lower key datasets
-        $this->dataset = array_map(fn($value): string => strtoupper($value), $this->dataset);
-
-        // Check endpoints
-        if (count(array_diff($this->dataset, Endpoints::names())) != 0) {
-            $this->dataset = Endpoints::names();
-        }
-
         return $this;
     }
 
-    /**
-     * Set preset licenseplate styling
-     * Can (be) overwrite with extra(Input)Attributes)
-     *
-     * @param  string  $type
-     * @return $this
-     */
-    public function licenseplateStyle(string $type = 'default'): static
+    final public function getDataset(): array
     {
-        if ($type === 'default') {
-            $this->extraInputAttributes([
-                'class' => 'font-bold',
-                'style' => 'background: #F3B701; font-size: 32px;letter-spacing: 2px; height: 48px'
-            ]);
-            $this->extraAttributes(['style' => 'border: 2px solid #241D0A; border-left: 48px solid #003CAA; border-radius: 5px;']);
-        } elseif ($type === 'taxi') {
-            $this->extraInputAttributes([
-                'class' => 'font-bold',
-                'style' => 'background: #05B0F0; font-size: 32px;letter-spacing: 2px; height: 48px'
-            ]);
-            $this->extraAttributes(['style' => 'border: 2px solid #241D0A; border-radius: 5px;']);
+        $this->dataset = $this->evaluate($this->dataset);
+
+        // check default settings
+        foreach ($this->dataset as $key => $dataset) {
+            if($dataset instanceof Endpoints) {
+                $this->dataset[$key] = $dataset;
+            }
         }
 
-        return $this;
+        return $this->dataset;
     }
 
-    /**
-     * Set language for the formfields and the output
-     *
-     * @param  string|\Closure  $language
-     * @return $this
-     */
-    public function language(string|\Closure $language = 'nl'): static
-    {
-        $this->language = $language;
-        return $this;
-    }
-
-    public function getLanguage(): string
-    {
-        return $this->evaluate($this->language) ?? app()->getLocale();
-    }
-
-//    public function showSelectDataset(array|\Closure|null $settings = null): static
-    //    {
-    //
-    //        $this->showSelectDataset = RdwApiSelectDataset::make('dataset')
-    //            ->label('Select dataset.')
-    //            ->dataSet('all')            // empty '' [] "VEHICLE", ["VEHICLE","FUEL"] 'all' ['ALL']
-    //            ->shortname(false)
-    //            ->showSelectAll('Select All')
-    ////                        ->showClear()
-    ////                        ->live(onBlur: true)
-    //            ->multiple(true);
-    //
-    //
-    //        return $this;
-    //    }
-
-//    /**
-//     * Show optionMenu to select DataSets
-//     *
-//     * @param  string|\Closure|null  $selector
-//     * @return $this
-//     */
-//    public function useDatasetSelectorName(string|\Closure|null $selector): static
+//    public function afterStateUpdated(?Closure $callback, array $namedInjections = [], array $typedInjections = []): static
 //    {
-//        $this->useDatasetSelector = $selector;
+//
+////        dd((new \ReflectionFunction($callback))->getParameters());
+////        dd($callback);
+//
+////        $dependencies = [];
+////        $result_return_function_name = null;
+////
+////        foreach ((new \ReflectionFunction($callback))->getParameters() as $parameter) {
+////            $dependencies[] = $this->resolveClosureDependencyForEvaluation($parameter, $namedInjections, $typedInjections);
+////        }
+//
+//        // Add Rdw Api
+//        //$dependencies['rdwApiResponse'] = $this->rdwApiRequest('HX084B');
+//
+//
+//        $this->afterStateUpdated[] = $callback;
 //
 //        return $this;
 //    }
-//
-//    public function getUseDatasetSelectorName(): string
-//    {
-//        return $this->evaluate($this->useDatasetSelector);
-//    }
 
+    //------------------------------------------------------------------------------------------------------------------
 
-    public function responseHandler(mixed $value, array $namedInjections = [], array $typedInjections = []): static
+    /**
+     * Preset afterStateUpdated
+     *
+     * ->responseHandler(function (Forms\Get $get, Forms\Set $set, RdwApiResponse $resultObject) {...})
+     *
+     * @param  mixed  $value
+     * @param  array  $namedInjections
+     * @param  array  $typedInjections
+     * @return $this
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \ReflectionException
+     */
+    final public function responseHandler(mixed $value, array $namedInjections = [], array $typedInjections = []): static
     {
         if (! $value instanceof \Closure) {
             return $value;
@@ -173,9 +102,9 @@ class RdwApiLicenseplate extends TextInput
                 $result_return_function_name = $parameter->getName();
                 continue;
             }
-            if(!in_array($parameter->getName(), ['set','get'])) {
-                continue;
-            }
+//            if(!in_array($parameter->getName(), ['set','get'])) {
+//                continue;
+//            }
             $dependencies[] = $this->resolveClosureDependencyForEvaluation($parameter, $namedInjections, $typedInjections);
         }
 
@@ -184,73 +113,111 @@ class RdwApiLicenseplate extends TextInput
         }
 
         $this->live(true)
-            ->afterStateUpdated(function (RdwApiLicenseplate $component, string $state) use ($value, $dependencies, $result_return_function_name) {
-                $dependencies[$result_return_function_name] = $this->createResponseObject($component, $state);
+            ->afterStateUpdated(function (string $state) use ($value, $dependencies, $result_return_function_name) {
+                $dependencies[$result_return_function_name] = $this->rdwApiRequest($state);
                 return $value(...$dependencies);
             });
 
         return $this;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     /**
-     * Create Rdw-Api response object
+     * Create Rdw-Api response object for onBlur
      *
      * @param  array  $data
      * @return void
      */
-    private function createResponseObject(RdwApiLicenseplate $component, string $licenseplate): RdwApiResponse
+    private function rdwApiRequest(string $licenseplate): RdwApiResponse   //RdwApiLicenseplate $component,
     {
         $endpoints = $this->getDataset();
         $format = $this->getOutputFormat();
 
-        $response = new RdwApiResponse();
-        $response->language = $this->getLanguage();
-        $response->state = $licenseplate;
-        $response->format = $format;
-        $response->endpoints = $endpoints;
-        $response->response = $this->rdwApiRequest($licenseplate, $endpoints, $format);
-        $response->ok = (count($response->response) == 0 ? false : true);
+        $response = RdwApiRequest::make()
+            ->setLanguage($this->getLanguage())
+            ->setLicenseplate($licenseplate)
+            ->setOutputFormat($format)
+            ->setEndpoints($endpoints)
+            ->rdwApiRequest()
+            ->get();
 
         return $response;
     }
 
-    private function rdwApiRequest(string $licenseplate, array $endpoints, string $format): array
+    //------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Set output format Json | array | xml
+     *
+     * @param  string|OutputFormat|\Closure  $type
+     * @return $this
+     */
+    final public function outputFormat(string|OutputFormat|\Closure $type = 'array'): static
     {
-        // Is options SelectDataset used
-        //        if (isset($component?->sibling) && !is_null($component?->sibling)) {
-        //            $endpoints = $get($component->sibling->getName()) ?? $this->getDataset();
-        //        } else {
-        //
-        //            $endpoints = $this->getDataset();
-        //        }
-
-        return \Jdkweb\Rdw\Facades\Rdw::finder()
-            ->setLicense($licenseplate)
-            ->setEndpoints($endpoints)
-            ->translate($this->getLanguage())
-            ->convert($format)
-            ->fetch();
-
-//        return $component->parentComponent->rdwApiRequestHandler(
-//            $licenseplate,
-//            $endpoints,
-//            $this->getLanguage(),
-//            $this->getOutputFormat()
-//        );
+        $this->outputFormat = $type;
+        return $this;
     }
 
-    public function getOutputFormat(): string
+    final public function getOutputFormat(): OutputFormat
     {
         $format = $this->evaluate($this->outputFormat);
-        if (!in_array($format, OutputFormat::names())) {
-            $format = 'array';
+
+        // check after evaluate
+        if (!in_array($format, OutputFormat::cases())) {
+            $format = OutputFormat::ARRAY;
         }
 
         return $format;
     }
 
-    public function getDataset(): array|string
+    //------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Set language to force specific output language in
+     * opposite to local or webpage language
+     *
+     * @param  string|\Closure  $language
+     * @return $this
+     */
+    final public function forceTranslation(string|\Closure|null $language = null): static
     {
-        return $this->evaluate($this->dataset);
+        $this->language = $language ?? app()->getLocale();
+        return $this;
+    }
+
+    final public function getLanguage(): string
+    {
+        return $this->evaluate($this->language) ?? app()->getLocale();
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Set preset licenseplate styling
+     * Can (be) overwrite with extra(Input)Attributes)
+     *
+     * @param  string  $type
+     * @return $this
+     */
+    final public function licenseplateStyle(string $type = 'default'): static
+    {
+        if ($type === 'default') {
+            $this->extraInputAttributes([
+                'class' => 'font-bold',
+                'style' => 'background: #F3B701; font-size: 32px;letter-spacing: 2px; height: 48px'
+            ]);
+            $this->extraAttributes([
+                'style' => 'border: 2px solid #241D0A; border-left: 48px solid #003CAA; border-radius: 5px;'
+            ]);
+        } elseif ($type === 'taxi') {
+            $this->extraInputAttributes([
+                'class' => 'font-bold',
+                'style' => 'background: #05B0F0; font-size: 32px;letter-spacing: 2px; height: 48px'
+            ]);
+            $this->extraAttributes(['style' => 'border: 2px solid #241D0A; border-radius: 5px;']);
+        }
+
+        return $this;
     }
 }

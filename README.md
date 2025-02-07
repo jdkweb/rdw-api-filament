@@ -21,7 +21,38 @@ composer require jdkweb/rdw-api-filament
 [See jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=readme-ov-file#translation)
 
 ## Usage
-![filament setup](./images/rdw-api-filament1.png)
+### Basic usage
+![filament setup](./images/rdw-api-filament1.webp)
+```php
+RdwApiLicenseplate::make('licenseplate')
+    ->label(__('rdw-api::form.licenseplateLabel'))
+    ->default('155GV3')    
+    ->dataSet(['vehicle','fuel'])
+    ->outputFormat('json')
+    ->licenseplateStyle()
+    ->required()
+```
+#### Endpoints selected
+Which datasets should be requested?
+```php
+->dataSet(['vehicle','fuel'])
+```
+Options for endpoints (not case sensitive):
+- vehicle
+- vehicle_class
+- fuel
+- bodywork
+- bodywork_specific
+- axles 
+- all
+#### Format of the response output
+```php  
+->outputFormat('array')
+```
+- array **[default]**
+- json
+- xml
+
 ```php
 use Jdkweb\Rdw\Enums\Endpoints;
 use Jdkweb\Rdw\Enums\OutputFormat;
@@ -67,11 +98,12 @@ Options for endpoints (not case sensitive):
 - bodywork_specific
 - axles 
 - all
-- 
+ 
 #### Format of the response output
 ```php  
 ->outputFormat('array')
 ```
+
 ### RdwApiSelectDataset Options
 #### Available endpoints to select
 ```php
