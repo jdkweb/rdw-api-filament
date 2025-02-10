@@ -17,7 +17,7 @@ trait RdwApiExampleForm1
      * @param  Form  $form
      * @return Form
      */
-    final protected function exampleForm1(Form $form): Form
+    protected function exampleForm1(Form $form): Form
     {
         return $form
             ->schema([
@@ -33,23 +33,13 @@ trait RdwApiExampleForm1
                                 Endpoints::FUEL
                             ])
                             ->hintAction(selectAllDatasets())
-
-//                            ->hintAction(function (Forms\Components\Select $component) {
-//                                return \Filament\Forms\Components\Actions\Action::make('selectall')
-//                                    ->label(__('rdw-api::form.selectallLabel'))
-//                                    ->icon('heroicon-m-list-bullet')
-//                                    ->action(function (Set $set) use ($component) {
-//                                        $component->state(array_keys($component->getEnabledOptions()));
-//                                    });
-//                            })
-
                             ->reactive()
                             ->required(),
                         RdwApiLicenseplate::make('licenseplate')
                             ->label(__('rdw-api::form.licenseplateLabel'))
-                            ->default('HX084V')
-                            ->outputFormat(fn(Forms\Get $get) => $get('output_format'))
-                            ->dataSet(fn(Forms\Get $get) => $get('datasets'))
+                            ->setOutputformat(fn(Forms\Get $get) => $get('output_format'))
+                            ->setEndpoints(fn(Forms\Get $get) => $get('datasets'))
+                            ->setEndpoints(Endpoints::cases())
                             ->required()
                             ->licenseplateStyle(),
                         Forms\Components\Select::make('output_format')
@@ -70,7 +60,7 @@ trait RdwApiExampleForm1
      * @param  RdwApiResponse  $data
      * @return array|string
      */
-    final public function exampleForm1Handler(RdwApiResponse $data): void
+    public function exampleForm1Handler(RdwApiResponse $data): void
     {
         // handle data
     }

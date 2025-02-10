@@ -17,7 +17,7 @@ trait RdwApiExampleForm3
      * @param  Form  $form
      * @return Form
      */
-    final protected function exampleForm3(Form $form): Form
+    protected function exampleForm3(Form $form): Form
     {
         return $form
             ->schema([
@@ -27,10 +27,10 @@ trait RdwApiExampleForm3
                         RdwApiLicenseplate::make('taxiplate')
                             ->default('HX084V')
                             ->label(__('rdw-api::form.licenseplateLabel'))
-                            ->dataSet(fn(Forms\Get $get): array => $get('taxidataset_disabled'))
-                            ->outputFormat(fn(Forms\Get $get): OutputFormat => $get('output_disabled'))
+                            ->setEndpoints(fn(Forms\Get $get): array => $get('taxidataset_disabled'))
+                            ->setOutputformat(fn(Forms\Get $get): OutputFormat => $get('output_disabled'))
                             ->required()
-                            ->forceTranslation(fn($get) => app()->getLocale())
+                            ->setLanguage(fn($get) => app()->getLocale())
                             ->licenseplateStyle('taxi')
                             ->live(true)
                             ->afterStateUpdated(function ($state, Forms\Set $set) use ($form) {
@@ -77,7 +77,7 @@ trait RdwApiExampleForm3
      * @param  array  $data
      * @return array|string
      */
-    final public function exampleForm3Handler(RdwApiResponse $data): void
+    public function exampleForm3Handler(RdwApiResponse $data): void
     {
         // handle data
     }

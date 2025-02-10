@@ -18,47 +18,25 @@ class RdwApiLicenseplate extends TextInput
     (\w{1}-?\d{3}-?\w{2})|(\w{3}-?\d{2}-?\w{1})|
     (\d{1}-?\w{2}-?\d{3})/i";
 
-    protected string|OutputFormat|\Closure $outputFormat = 'array';
+    protected string|int|\Closure $api = 0;
 
-    protected string|array|Endpoints|\Closure $dataset = [];
+    protected string|OutputFormat|\Closure|null $outputFormat = '';
+
+    protected string|array|Endpoints|\Closure $endpoints = [];
 
     protected string|\Closure|null $language = 'nl';
 
     //------------------------------------------------------------------------------------------------------------------
 
-    final protected function setUp(): void
+    protected function setUp(): void
     {
         $this->maxLength = 8; // exp. 52-BVL-9
         $this->minLength = 6; // exp. 52BVL9
         $this->regex($this->regexLicensePlate);
         $this->language = app()->getLocale();
-        $this->dataset = Endpoints::cases(); //['VEHICLE','VEHICLE_CLASS','FUEL','BODYWORK','BODYWORK_SPECIFIC','AXLES']
+        $this->endpoints = Endpoints::cases(); //['VEHICLE','VEHICLE_CLASS','FUEL','BODYWORK','BODYWORK_SPECIFIC','AXLES']
 
         parent::setUp();
-    }
-
-    //------------------------------------------------------------------------------------------------------------------
-
-    final public function dataSet(string|array|Endpoints|\Closure|null $dataset = null): static
-    {
-        $this->dataset = $dataset;
-        return $this;
-    }
-
-    //------------------------------------------------------------------------------------------------------------------
-
-    final public function getDataset(): array
-    {
-        $this->dataset = $this->evaluate($this->dataset);
-
-        // check default settings
-        foreach ($this->dataset as $key => $dataset) {
-            if ($dataset instanceof Endpoints) {
-                $this->dataset[$key] = $dataset;
-            }
-        }
-
-        return $this->dataset;
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -71,18 +49,62 @@ class RdwApiLicenseplate extends TextInput
      */
     private function rdwApiRequest(string $licenseplate): RdwApiResponse   //RdwApiLicenseplate $component,
     {
-        $endpoints = $this->getDataset();
-        $format = $this->getOutputFormat();
+        $endpoints = $this->getEndpoints();
+        $format = $this->getOutputformat();
 
         $response = RdwApiRequest::make()
+            ->setAPI($this->getApi())
             ->setLanguage($this->getLanguage())
             ->setLicenseplate($licenseplate)
-            ->setOutputFormat($format)
+            ->setOutputformat($format)
             ->setEndpoints($endpoints)
-            ->rdwApiRequest()
-            ->get();
+            ->fetch();
 
         return $response;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    public function setApi(string|int|\Closure $api): static
+    {
+        $this->api = $api;
+        return $this;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    public function getApi(): string|int
+    {
+        return $this->evaluate($this->api);
+    }
+
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    public function setEndpoints(string|array|Endpoints|\Closure $endpoints): static
+    {
+        if(is_string($endpoints)) {
+            $endpoints = [$endpoints];
+        }
+
+        $this->endpoints = $endpoints;
+        return $this;
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    public function getEndpoints(): array
+    {
+        $this->endpoints = $this->evaluate($this->endpoints);
+
+        // check default settings
+        foreach ($this->endpoints as $key => $endpoints) {
+            if ($endpoints instanceof Endpoints) {
+                $this->endpoints[$key] = $endpoints;
+            }
+        }
+
+        return $this->endpoints;
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -93,7 +115,7 @@ class RdwApiLicenseplate extends TextInput
      * @param  string|OutputFormat|\Closure  $type
      * @return $this
      */
-    final public function outputFormat(string|OutputFormat|\Closure $type = 'array'): static
+    public function setOutputformat(string|OutputFormat|\Closure $type = 'array'): static
     {
         $this->outputFormat = $type;
         return $this;
@@ -101,13 +123,13 @@ class RdwApiLicenseplate extends TextInput
 
     //------------------------------------------------------------------------------------------------------------------
 
-    final public function getOutputFormat(): OutputFormat
+    public function getOutputformat(): ?OutputFormat
     {
         $format = $this->evaluate($this->outputFormat);
 
         // check after evaluate
         if (!in_array($format, OutputFormat::cases())) {
-            $format = OutputFormat::ARRAY;
+            $format = null; //OutputFormat::ARRAY;
         }
 
         return $format;
@@ -122,7 +144,7 @@ class RdwApiLicenseplate extends TextInput
      * @param  string|\Closure  $language
      * @return $this
      */
-    final public function forceTranslation(string|\Closure|null $language = null): static
+    public function setLanguage(string|\Closure|null $language = null): static
     {
         $this->language = $language ?? app()->getLocale();
         return $this;
@@ -130,7 +152,7 @@ class RdwApiLicenseplate extends TextInput
 
     //------------------------------------------------------------------------------------------------------------------
 
-    final public function getLanguage(): string
+    public function getLanguage(): string
     {
         return $this->evaluate($this->language) ?? app()->getLocale();
     }
@@ -144,7 +166,7 @@ class RdwApiLicenseplate extends TextInput
      * @param  string  $type
      * @return $this
      */
-    final public function licenseplateStyle(string $type = 'default'): static
+    public function licenseplateStyle(string $type = 'default'): static
     {
         if ($type === 'default') {
             $this->extraInputAttributes([

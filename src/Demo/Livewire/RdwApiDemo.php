@@ -60,7 +60,7 @@ class RdwApiDemo extends Component implements HasForms
      *
      * @return void
      */
-    final protected function setLanguage():void
+    protected function setLanguage():void
     {
         $url = config('rdw-api.rdw_api_folder') . "/".
             config('rdw-api.rdw_api_filament_folder') . "/".
@@ -75,7 +75,7 @@ class RdwApiDemo extends Component implements HasForms
 
     //------------------------------------------------------------------------------------------------------------------
 
-    final public function mount():void
+    public function mount():void
     {
         $this->exampleForm1->fill();
         $this->exampleForm2->fill();
@@ -84,7 +84,7 @@ class RdwApiDemo extends Component implements HasForms
 
     //------------------------------------------------------------------------------------------------------------------
 
-    final protected function getForms(): array
+    protected function getForms(): array
     {
         return [
             'exampleForm1',
@@ -101,13 +101,12 @@ class RdwApiDemo extends Component implements HasForms
      * @param  string  $form
      * @return void
      */
-    final public function handleForm(string $form): void
+    public function handleForm(string $form): void
     {
 
         $result = RdwApiRequest::make()
             ->setFormData($this->{$form})
-            ->rdwApiRequest()
-            ->get();
+            ->fetch();
 
         // check method
         if (preg_match("/^exampleForm[0-9]{1}$/", $form) &&
@@ -127,7 +126,7 @@ class RdwApiDemo extends Component implements HasForms
      * @param  RdwApiResponse  $response
      * @return void
      */
-    final protected function livewireOutput(RdwApiResponse $data): void
+    protected function livewireOutput(RdwApiResponse $data): void
     {
         switch ($data->request->outputformat) {
             case OutputFormat::XML:
@@ -158,7 +157,7 @@ class RdwApiDemo extends Component implements HasForms
      *
      * @return void
      */
-    final public function clear(): void
+    public function clear(): void
     {
         $this->results = null;
         $this->livewire_results = null;
@@ -166,7 +165,7 @@ class RdwApiDemo extends Component implements HasForms
 
     //------------------------------------------------------------------------------------------------------------------
 
-    final public function render(): View
+    public function render(): View
     {
         // Pass not livewire data for the post form
         return view('rdw_views::livewire.rdw-api-demo')

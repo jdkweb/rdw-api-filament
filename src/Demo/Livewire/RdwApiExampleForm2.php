@@ -18,7 +18,7 @@ trait RdwApiExampleForm2
      * @param  Form  $form
      * @return Form
      */
-    final protected function exampleForm2(Form $form): Form
+    protected function exampleForm2(Form $form): Form
     {
         return $form
             ->schema([
@@ -29,22 +29,20 @@ trait RdwApiExampleForm2
                         ->default('HX-084-V')
                         ->label(__('rdw-api::form.licenseplateLabel'))
                         ->required()
-                        ->dataSet([
+                        ->setEndpoints([
                             Endpoints::VEHICLE,
                             Endpoints::FUEL,
                             Endpoints::AXLES
                         ])
-                        //->forceTranslation('en')
-                        ->outputFormat(fn() => OutputFormat::JSON)
+                        ->setOutputformat(fn() => OutputFormat::JSON)
                         ->licenseplateStyle()
                         ->live(true)
                         ->afterStateUpdated(function ($state, Forms\Set $set) use ($form) {
 
                             $result = \Jdkweb\Rdw\Filament\Controllers\RdwApiRequest::make()
                                 ->setFormData($form)
-                                ->rdwApiRequest()
-                                ->get();
-
+                                //->setApi(0)
+                                ->fetch();
 
                             if ($result->status === false) {
                                 return;
@@ -116,7 +114,7 @@ trait RdwApiExampleForm2
      * @param  RdwApiResponse $data
      * @return void
      */
-    final public function exampleForm2Handler(RdwApiResponse $data):void
+    public function exampleForm2Handler(RdwApiResponse $data):void
     {
         $this->exampleForm2->fill([
             'kenteken' => $data->request->licenseplate,

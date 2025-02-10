@@ -35,7 +35,7 @@ class RdwApiRequest extends \Jdkweb\Rdw\Controllers\RdwApiRequest
      * @return $this
      * @throws RdwException
      */
-    final public function setFormData(Form $form): static
+    public function setFormData(Form $form): static
     {
         $data = $form->getState();
         $rdwApiLicenseplate = $this->getComponent($form);
@@ -43,10 +43,11 @@ class RdwApiRequest extends \Jdkweb\Rdw\Controllers\RdwApiRequest
 
         // Set data for RDW request
         $this->licenseplate = $data[$licensePlateName];
-        $this->outputformat = $rdwApiLicenseplate->getOutputFormat();
+        $this->outputformat = $rdwApiLicenseplate->getOutputformat();
         $this->language = $rdwApiLicenseplate->getLanguage();
+        $this->api = $rdwApiLicenseplate->getApi();
 
-        return $this->setEndpoints($rdwApiLicenseplate->getDataset());
+        return $this->setEndpoints($rdwApiLicenseplate->getEndpoints());
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -56,7 +57,7 @@ class RdwApiRequest extends \Jdkweb\Rdw\Controllers\RdwApiRequest
      *
      * @throws RdwException
      */
-    final private function getComponent(Form $form): RdwApiLicenseplate
+    private function getComponent(Form $form): RdwApiLicenseplate
     {
         $components = $form->getFlatComponents();
 

@@ -7,7 +7,7 @@ use Livewire\Livewire;
 
 class RdwServiceProvider extends ServiceProvider
 {
-    final public function boot():void
+    public function boot():void
     {
         require __DIR__ ."/Helpers/RdwApiHelpers.php";
 
@@ -26,7 +26,7 @@ class RdwServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    final public function register():void
+    public function register():void
     {
     }
 }

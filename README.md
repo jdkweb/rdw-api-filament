@@ -8,6 +8,9 @@ This package extends [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=read
 - [Installation](#installation)
 - [Translation](#translation)
 - [Usage](#usage)
+  - [Form Field](#formfield)
+  - [Handle Response](#response)
+- [Example](#example)  
 - [Demo](#demo)
 - [Extension for Filament](#filament)
 
@@ -18,116 +21,196 @@ Install the package via composer:
 composer require jdkweb/rdw-api-filament
 ```
 ## Translation
-[See jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=readme-ov-file#translation)
+[See jdkweb/rdw-api](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-ov-file#translation)
 
-## Usage
+# Usage
+- [Filament Form Field: RdwApiRequest](#formfield)
+- [Response RdwApiResponse](#response)
+ 
+## <a name="formfield"></a>Form Field
 ### Basic usage
 ![filament setup](./images/rdw-api-filament1.webp)
 ```php
+use Jdkweb\Rdw\Filament\Forms\Components\RdwApiLicenseplate;
+...
 RdwApiLicenseplate::make('licenseplate')
     ->label(__('rdw-api::form.licenseplateLabel'))
     ->default('155GV3')    
-    ->dataSet(['vehicle','fuel'])
-    ->outputFormat('json')
-    ->licenseplateStyle()
-    ->required()
+    ->licenseplateStyle()  // Basic style Dutch licenseplate
 ```
-#### Endpoints selected
-Which datasets should be requested?
+- Request to the active API (default: opendata.rdw.nl) \
+- All RDW endpoints are selected
+### All options used
 ```php
-->dataSet(['vehicle','fuel'])
+use Jdkweb\Rdw\Enums\Endpoints;
+use Jdkweb\Rdw\Enums\OutputFormat;
+use Jdkweb\Rdw\Filament\Forms\Components\RdwApiLicenseplate;
+...
+RdwApiLicenseplate::make('licenseplate')
+    ->label(__('rdw-api::form.licenseplateLabel'))
+    ->default('155GV3')    
+    ->setApi(1)
+    ->setEndpoints(Endpoints::cases())    
+    ->setOutputformat(OutputFormat::ARRAY)    
+    ->setLanguage('en')
+    ->licenseplateStyle() 
 ```
-Options for endpoints (not case sensitive):
-- vehicle
-- vehicle_class
-- fuel
-- bodywork
-- bodywork_specific
-- axles 
-- all
+### Options
+#### Select other API than default
+```php
+->setApi(int|string|\Closure) // 0 | opendata | 1 | overheid    
+```
+Overwrite the config settings 
+- 0 or 'opendata' for using the RDW API opendata.rdw.nl **[default]**
+- 1 or 'overheidio' for using the overheid.io API
+
+#### Select endpoints for request 
+```php
+use \Jdkweb\Rdw\Enums\Endpoints;
+...
+->setEndpoints(string|array|Endpoints|\Closure)
+
+#examples  
+    # one string
+    ->setEndpoints('vehicle')       
+    # array with strings
+    ->setEndpoints([                
+        'vehicle',
+        'fuel'
+    ])
+    # array with endpoints
+    ->setEndpoints([                
+        Endpoints::VEHICLE,
+        Endpoints::FUEL,    
+    ])    
+    # closure
+    ->setEndpoints(fn() => ($when ? Endpoints::cases() : Endpoints::BODYWORK))
+    # select all
+    ->setEndpoints(Endpoints::cases())    
+````
+Available endpoints (not case sensitive):
+- Endpoints::VEHICLE | vehicle
+- Endpoints::VEHICLE_CLASS |vehicle_class
+- Endpoints::FUEL | fuel
+- Endpoints::BODYWORK | bodywork
+- Endpoints::BODYWORK_SPECIFIC | bodywork_specific
+- Endpoints::AXLES | axles 
+- Endpoints::cases() **[default]**
+
 #### Format of the response output
 ```php  
-->outputFormat('array')
-```
-- array **[default]**
-- json
-- xml
+->outputFormat(string|OutputFormat|\Closure)
 
+#examples  
+    ->outputFormat('array')
+    ->outputFormat(OutputFormat::ARRAY)
+    ->setOutputformat(fn(Forms\Get $get) => $get('output_format'))
+```
+- OutputFormat::ARRAY | array **[default]**
+- OutputFormat::JSON | json
+- OutputFormat::AML | xml
+
+by using this method the response contains a formated output. see [RdwApiResponse](#RdwApiResponse)  
+
+#### Set output language
+```php
+->setLanguage(string|\Closure)
+```
+Force output language, so form can be English and RDW response in Dutch. \
+Available:
+  - nl 
+  - en
+
+#### Basic style for Dutch licenseplate
+```php
+->licenseplateStyle() 
+->licenseplateStyle('taxi')  // blue taxi plate 
+```
+
+### <a title="response"></a>Handle response
+```php
+public function handleForm(string $form): void
+{
+    $result = RdwApiRequest::make()
+        ->setFormData($this->form)
+        ->fetch();
+```
+### Response
+```php
+Jdkweb\Rdw\Controllers\RdwApiResponse {#2800 ▼
+  +response: array:2 [▶]    // API response
+  +request: {#3036 ▶}       // Request vars
+  +output: array:2 [▶]      // Formated output when setOutputFormat is used
+  +status: true
+}
+```
+See [Response methods](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-ov-file#response)
+
+### Example
+![filament setup](./images/rdw-api-filament2.webp)
 ```php
 use Jdkweb\Rdw\Enums\Endpoints;
 use Jdkweb\Rdw\Enums\OutputFormat;
 use Jdkweb\Rdw\Filament\Forms\Components\RdwApiLicenseplate;
 use Jdkweb\Rdw\Filament\Forms\Components\RdwApiResponse;
-use Jdkweb\Rdw\Filament\Forms\Components\RdwApiSelectDataset;
+use Jdkweb\Rdw\Filament\Controllers\RdwApiRequest;
+...
 
-RdwApiSelectDataset::make('datasets')
+Forms\Components\Select::make('datasets')
     ->label(__('rdw-api::form.selectdatasetLabel'))
-    ->dataSet('all')
-    ->setDefault(fn() => ['vehicle'])
-    ->shortname(true)
-    ->showSelectAll()
     ->multiple()
+    ->options(Endpoints::class)
+    ->default([
+        Endpoints::VEHICLE,
+        Endpoints::FUEL
+    ])
+    ->hintAction(selectAllDatasets())   // Helper function for select all link
+    ->reactive()
     ->required(),
-    
 RdwApiLicenseplate::make('licenseplate')
     ->label(__('rdw-api::form.licenseplateLabel'))
-    ->default('155-GV-3')
+    ->setOutputformat(fn(Forms\Get $get) => $get('output_format'))
+    ->setEndpoints(fn(Forms\Get $get) => $get('datasets'))
+    ->required()
     ->licenseplateStyle()
-    ->required(),
-    
+    ->live(true)
+    ->afterStateUpdated(function ($state, Forms\Set $set) use ($form) {
+
+        $result = \Jdkweb\Rdw\Filament\Controllers\RdwApiRequest::make()
+            ->setFormData($form)
+            ->fetch();
+
+        if ($result->status === false) {
+            return;
+        }
+
+        // Handle data
+        // $result->quickSearch('merk') etc.
+    }),    
 Forms\Components\Select::make('output_format')
     ->label(__('rdw-api::form.formatLabel'))
     ->required()
-    ->options(OutputFormat::getOptions())
-```
-### RdwApiLicenseplate Options
-#### Preset for Dutch licenseplate style
-```php
-->licenseplateStyle()
-```
-#### Endpoints selected
-When the options field RdwApiSelectDataset is not used 
-```php
-->dataSet(['vehicle','fuel'])
-```
-Options for endpoints (not case sensitive):
-- vehicle
-- vehicle_class
-- fuel
-- bodywork
-- bodywork_specific
-- axles 
-- all
- 
-#### Format of the response output
-```php  
-->outputFormat('array')
+    ->default(OutputFormat::XML)
+    ->options(OutputFormat::class)
+    ->reactive() // Enables reactivity
 ```
 
-### RdwApiSelectDataset Options
-#### Available endpoints to select
 ```php
-->dataSet('all') # show all datasets
-->dataSet(['vehicle','fuel']) # show only vehicle and fuel
-```
-Options for endpoints (not case sensitive):
-- vehicle
-- vehicle_class
-- fuel
-- bodywork
-- bodywork_specific
-- axles 
-- all
-#### Preset selection
-```php
-->setDefault(['vehicle'])
-->setDefault(fn() => (request()->ip() == '192.168.1.1' ? 'vehicle' : 'all'))
-```
-#### Use shortnames for RDW datasets
-```php
-->shortname(true) // 'Vehicles' instead of 'Registered vehicles'
-```
-#### Show select all link
-```php
-->showSelectAll()
+...
+
+public function handleForm(string $form): void
+{
+
+    $result = RdwApiRequest::make()
+        ->setFormData($this->form)
+        ->fetch();
+    ...
+    ..
+    
+
+    switch ($data->request->outputformat) {
+        case OutputFormat::XML:
+            $data->toXml(true)
+    ...
+
 ```
