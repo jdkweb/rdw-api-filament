@@ -5,8 +5,9 @@ namespace Jdkweb\Rdw\Filament\Demo\Livewire;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Jdkweb\Rdw\Controllers\RdwApiResponse;
-use Jdkweb\Rdw\Controllers\RdwApiRequest;
+//use Jdkweb\Rdw\Filament\Controllers\RdwApiRequest;
 use Jdkweb\Rdw\Enums\OutputFormat;
+use Jdkweb\Rdw\Filament\Controllers\RdwApiRequest;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
 
@@ -66,8 +67,8 @@ class RdwApiDemo extends Component implements HasForms
             config('rdw-api.rdw_api_demo_slug');
 
         $language = app()->getLocale();
-        if(preg_match("/^" . addcslashes($url,"/") . "\/(nl|en)$/", request()->path())) {
-            $language = str_replace($url."/","",request()->path());
+        if (preg_match("/^" . addcslashes($url, "/") . "\/(nl|en)$/", request()->path())) {
+            $language = str_replace($url."/", "", request()->path());
         }
         app()->setLocale($language);
     }
@@ -102,13 +103,14 @@ class RdwApiDemo extends Component implements HasForms
      */
     final public function handleForm(string $form): void
     {
+
         $result = RdwApiRequest::make()
             ->setFormData($this->{$form})
             ->rdwApiRequest()
             ->get();
 
         // check method
-        if(preg_match("/^exampleForm[0-9]{1}$/", $form) &&
+        if (preg_match("/^exampleForm[0-9]{1}$/", $form) &&
            method_exists($this, $form)) {
              $this->{$form."Handler"}($result);
         }
@@ -129,17 +131,23 @@ class RdwApiDemo extends Component implements HasForms
     {
         switch ($data->request->outputformat) {
             case OutputFormat::XML:
-                $this->livewire_results = view('rdw_views::components.xml',
-                    ['results' => $data->toXml(true)]);
+                $this->livewire_results = view(
+                    'rdw_views::components.xml',
+                    ['results' => $data->toXml(true)]
+                );
                 break;
             case OutputFormat::JSON:
-                $this->livewire_results = view('rdw_views::components.json',
-                    ['noscript' => true]);
+                $this->livewire_results = view(
+                    'rdw_views::components.json',
+                    ['noscript' => true]
+                );
                 $this->dispatch('getJsonResult', result: $data->toJson());
                 break;
             default:
-                $this->livewire_results = view('rdw_views::components.array',
-                    ['results' => $data->toArray()]);
+                $this->livewire_results = view(
+                    'rdw_views::components.array',
+                    ['results' => $data->toArray()]
+                );
         };
     }
 

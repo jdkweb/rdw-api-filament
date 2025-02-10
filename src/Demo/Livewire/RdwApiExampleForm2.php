@@ -7,7 +7,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Jdkweb\Rdw\Enums\Endpoints;
 use Jdkweb\Rdw\Enums\OutputFormat;
-use Jdkweb\Rdw\Controllers\RdwApiRequest;
 use Jdkweb\Rdw\Controllers\RdwApiResponse;
 use Jdkweb\Rdw\Filament\Forms\Components\RdwApiLicenseplate;
 
@@ -39,15 +38,17 @@ trait RdwApiExampleForm2
                         ->outputFormat(fn() => OutputFormat::JSON)
                         ->licenseplateStyle()
                         ->live(true)
-                        ->afterStateUpdated(function($state, Forms\Set $set) use ($form) {
+                        ->afterStateUpdated(function ($state, Forms\Set $set) use ($form) {
 
-                            $result = RdwApiRequest::make()
+                            $result = \Jdkweb\Rdw\Filament\Controllers\RdwApiRequest::make()
                                 ->setFormData($form)
                                 ->rdwApiRequest()
                                 ->get();
 
 
-                            if($result->status === false) return;
+                            if ($result->status === false) {
+                                return;
+                            }
 
                             $set('merk', @$result->response['Voertuigen']['merk']);
                             $set('voertuigsoort', $result->quickSearch('voertuigsoort'));
@@ -59,16 +60,48 @@ trait RdwApiExampleForm2
                         ->label('Result')
                         ->schema([
                             TextInput::make('merk')
-                                ->label(ucfirst(str_replace("_"," ",__('rdw-api::vehicle.merk'))))
+                                ->label(
+                                    ucfirst(
+                                        str_replace(
+                                            "_",
+                                            " ",
+                                            __('rdw-api::vehicle.merk')
+                                        )
+                                    )
+                                )
                                 ->readonly(),
                             TextInput::make('voertuigsoort')
-                                ->label(ucfirst(str_replace("_"," ",__('rdw-api::vehicle.voertuigsoort'))))
+                                ->label(
+                                    ucfirst(
+                                        str_replace(
+                                            "_",
+                                            " ",
+                                            __('rdw-api::vehicle.voertuigsoort')
+                                        )
+                                    )
+                                )
                                 ->readonly(),
                             TextInput::make('brandstof_omschrijving')
-                                ->label(ucfirst(str_replace("_"," ",__('rdw-api::fuel.brandstof_omschrijving'))))
+                                ->label(
+                                    ucfirst(
+                                        str_replace(
+                                            "_",
+                                            " ",
+                                            __('rdw-api::fuel.brandstof_omschrijving')
+                                        )
+                                    )
+                                )
                                 ->readonly(),
                             TextInput::make('aslast')
-                                ->label(ucfirst(str_replace("_"," ",__('rdw-api::axles.wettelijk_toegestane_maximum_aslast'))))
+                                ->label(
+                                    ucfirst(
+                                        str_replace(
+                                            "_",
+                                            " ",
+                                            __('rdw-api::axles.wettelijk_toegestane_maximum_aslast')
+                                        )
+                                    )
+                                )
                                 ->readonly(),
                         ])
                 ])
