@@ -12,7 +12,7 @@ This package extends [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=read
   - [Handle Response](#response)
 - [Example](#example)  
 - [Demo](#demo)
-- [Extension for Filament](#filament)
+
 
 ## Installation
 Requires PHP 8.2 and Laravel 10 and Filament 3 or higher \
@@ -135,7 +135,7 @@ public function handleForm(string $form): void
         ->setFormData($this->form)
         ->fetch();
 ```
-### Response
+#### Response
 ```php
 Jdkweb\Rdw\Controllers\RdwApiResponse {#2800 ▼
   +response: array:2 [▶]    // API response
@@ -146,8 +146,10 @@ Jdkweb\Rdw\Controllers\RdwApiResponse {#2800 ▼
 ```
 See [Response methods](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-ov-file#response)
 
-### Example
+## Example
 ![filament setup](./images/rdw-api-filament2.webp)
+
+Create Filament form
 ```php
 use Jdkweb\Rdw\Enums\Endpoints;
 use Jdkweb\Rdw\Enums\OutputFormat;
@@ -156,6 +158,9 @@ use Jdkweb\Rdw\Filament\Forms\Components\RdwApiResponse;
 use Jdkweb\Rdw\Filament\Controllers\RdwApiRequest;
 ...
 
+/**
+ * Dataset Selectbox 
+ */
 Forms\Components\Select::make('datasets')
     ->label(__('rdw-api::form.selectdatasetLabel'))
     ->multiple()
@@ -165,8 +170,14 @@ Forms\Components\Select::make('datasets')
         Endpoints::FUEL
     ])
     ->hintAction(selectAllDatasets())   // Helper function for select all link
-    ->reactive()
+    ->reactive() // Enables reactivity
     ->required(),
+
+/**
+ * Licenseplate
+ *
+ * Extra reactive data for Endpoints and outputFormat   
+ */    
 RdwApiLicenseplate::make('licenseplate')
     ->label(__('rdw-api::form.licenseplateLabel'))
     ->setOutputformat(fn(Forms\Get $get) => $get('output_format'))
@@ -185,8 +196,14 @@ RdwApiLicenseplate::make('licenseplate')
         }
 
         // Handle data
-        // $result->quickSearch('merk') etc.
+        // $set('merk', $result->quickSearch('merk'));
+        // $set('voertuigsoort', $result->quickSearch('voertuigsoort'));        
+        // ...    
     }),    
+
+/**
+ * Output format selectbox 
+ */    
 Forms\Components\Select::make('output_format')
     ->label(__('rdw-api::form.formatLabel'))
     ->required()
@@ -194,23 +211,44 @@ Forms\Components\Select::make('output_format')
     ->options(OutputFormat::class)
     ->reactive() // Enables reactivity
 ```
-
+Handle Form data
 ```php
 ...
 
 public function handleForm(string $form): void
 {
 
+    // Get RDW data
     $result = RdwApiRequest::make()
         ->setFormData($this->form)
         ->fetch();
     ...
     ..
     
-
+    // Handle data format 
     switch ($data->request->outputformat) {
         case OutputFormat::XML:
             $data->toXml(true)
     ...
 
+```
+
+## Demo
+There is a demo available to test this wrapper \
+Two options to use the demo:
+1. ### .env
+   ```php
+    RDW_API_DEMO=1
+   ```
+   Add this value to .env
+2. ### config
+   Import the rwd-api config en set the value to 1 ([Installation](#installation))
+   ```php
+    rdw_api_demo => 1,
+   ```
+   Demo: 0 = Off | 1 = On
+
+### Demo url
+```html
+http://[domainname]/rdw-api/demo
 ```
