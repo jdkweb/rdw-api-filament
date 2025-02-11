@@ -1,0 +1,30 @@
+{
+    "name": "jdkweb/rdw-api-filament",
+    "description": "Filament extension for rdw-api. rdw-api is a wrapper for RDW API",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Jdkweb\\RdwApi\\Filament\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jasper",
+            "email": "jasper@jdkweb.nl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.0",
+        "jdkweb/rdw-api": "*",
+        "filament/support": "^3.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jdkweb\\RdwApi\\Filament\\RdwServiceProvider"
+            ]
+        }
+    }
+}
