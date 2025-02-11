@@ -1,6 +1,10 @@
 # RDW API extension for Filament
-Laravel application to get vehicle information from [opendata.rdw.nl](https://opendata.rdw.nl) or [overheid.io](https://overheid.io). \
-Depends on [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=readme-ov-file#demo). \
+Laravel application to get vehicle information from [opendata.rdw.nl](https://opendata.rdw.nl) or [overheid.io](https://overheid.io).
+
+Depends on: \  
+Github: [jdkweb/rdw-api-filament](https://github.com/jdkweb/rdw-api) \
+packagist: [jdkweb/rdw-api-filament](https://packagist.org/packages/jdkweb/rdw-api)
+
 This package extends [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=readme-ov-file#demo) to be used in [Filament](https://filamentphp.com/)
 
 ## Table of contents
