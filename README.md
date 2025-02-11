@@ -2,8 +2,8 @@
 Laravel application to get vehicle information from [opendata.rdw.nl](https://opendata.rdw.nl) or [overheid.io](https://overheid.io).
 
 Depends on: \  
-Github: [jdkweb/rdw-api-filament](https://github.com/jdkweb/rdw-api) \
-packagist: [jdkweb/rdw-api-filament](https://packagist.org/packages/jdkweb/rdw-api)
+Github: [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api) \
+packagist: [jdkweb/rdw-api](https://packagist.org/packages/jdkweb/rdw-api)
 
 This package extends [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=readme-ov-file#demo) to be used in [Filament](https://filamentphp.com/)
 
@@ -25,11 +25,13 @@ Install the package via composer:
 composer require jdkweb/rdw-api-filament
 ```
 ## Translation
-[See jdkweb/rdw-api](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-ov-file#translation)
+See:\
+Github: [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-ov-file#translation) \
+Packagist: [jdkweb/rdw-api](https://packagist.org/packages/jdkweb/rdw-api)
 
 # Usage
-- [Filament Form Field: RdwApiRequest](#formfield)
-- [Response RdwApiResponse](#response)
+- [Filament FormField: RdwApiRequest](#formfield)
+- [Response: RdwApiResponse](#response)
  
 ## <a name="formfield"></a>Form Field
 ### Basic usage
