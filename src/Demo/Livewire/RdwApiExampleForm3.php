@@ -25,7 +25,6 @@ trait RdwApiExampleForm3
                     ->extraAttributes(['style' => "margin: 40px"])
                     ->schema([
                         RdwApiLicenseplate::make('taxiplate')
-                            ->default('HX084V')
                             ->label(__('rdw-api::form.licenseplateLabel'))
                             ->setEndpoints(fn(Forms\Get $get): array => $get('taxidataset_disabled'))
                             ->setOutputformat(fn(Forms\Get $get): OutputFormat => $get('output_disabled'))
