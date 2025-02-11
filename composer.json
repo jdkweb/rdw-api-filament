@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": "^8.0",
-        "jdkweb/rdw-api": ">=0.9.0",
+        "jdkweb/rdw-api": "^1.0.0",
         "filament/support": "^3.0"
     },
     "extra": {
