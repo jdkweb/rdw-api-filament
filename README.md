@@ -197,7 +197,9 @@ RdwApiLicenseplate::make('licenseplate')
 
         // Handle data
         // $set('merk', $result->quickSearch('merk'));
-        // $set('voertuigsoort', $result->quickSearch('voertuigsoort'));        
+        // $set('voertuigsoort', $result->quickSearch('voertuigsoort'));
+        // $set('brandstof_omschrijving', $result->quickSearch('1.brandstof_omschrijving')); // type or  hybrid: first type
+        // $set('aslast', $result->quickSearch('2.wettelijk_toegestane_maximum_aslast')); // second axle       
         // ...    
     }),    
 

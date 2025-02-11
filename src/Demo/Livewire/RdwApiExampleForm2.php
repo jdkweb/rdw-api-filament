@@ -26,7 +26,7 @@ trait RdwApiExampleForm2
                     ->extraAttributes(['style' => "margin: 40px"])
                 ->schema([
                     RdwApiLicenseplate::make('kenteken')
-                        ->default('HX-084-V')
+                        //->setApi(0)
                         ->label(__('rdw-api::form.licenseplateLabel'))
                         ->required()
                         ->setEndpoints([
@@ -50,8 +50,10 @@ trait RdwApiExampleForm2
 
                             $set('merk', @$result->response['Voertuigen']['merk']);
                             $set('voertuigsoort', $result->quickSearch('voertuigsoort'));
-                            $set('brandstof_omschrijving', $result->quickSearch('brandstof_omschrijving'));
-                            $set('aslast', $result->quickSearch('wettelijk_toegestane_maximum_aslast', 0));
+                            // first fuel when hybrid
+                            $set('brandstof_omschrijving', $result->quickSearch('1.brandstof_omschrijving'));
+                            // second axle
+                            $set('aslast', $result->quickSearch('2.wettelijk_toegestane_maximum_aslast'));
                         }),
 
                     Forms\Components\Fieldset::make('result')
@@ -120,8 +122,8 @@ trait RdwApiExampleForm2
             'kenteken' => $data->request->licenseplate,
             'merk' =>  $data->quickSearch('merk') ?? '',
             'voertuigsoort' => $data->quickSearch('voertuigsoort') ?? '',
-            'brandstof_omschrijving' => $data->quickSearch('brandstof_omschrijving') ?? '',
-            'aslast' => $data->quickSearch('wettelijk_toegestane_maximum_aslast', 0) ?? '',
+            'brandstof_omschrijving' => $data->quickSearch('1.brandstof_omschrijving') ?? '',
+            'aslast' => $data->quickSearch('2.wettelijk_toegestane_maximum_aslast') ?? '',
         ]);
     }
 }
