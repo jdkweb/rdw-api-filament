@@ -14,7 +14,6 @@
             "email": "jasper@jdkweb.nl"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": "^8.0",
         "jdkweb/rdw-api": ">=0.9.0",
