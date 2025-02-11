@@ -31,7 +31,7 @@ composer require jdkweb/rdw-api-filament
 ### Basic usage
 ![filament setup](./images/rdw-api-filament1.webp)
 ```php
-use Jdkweb\Rdw\Filament\Forms\Components\RdwApiLicenseplate;
+use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 ...
 RdwApiLicenseplate::make('licenseplate')
     ->label(__('rdw-api::form.licenseplateLabel'))
@@ -42,9 +42,9 @@ RdwApiLicenseplate::make('licenseplate')
 - All RDW endpoints are selected
 ### All options used
 ```php
-use Jdkweb\Rdw\Enums\Endpoints;
-use Jdkweb\Rdw\Enums\OutputFormat;
-use Jdkweb\Rdw\Filament\Forms\Components\RdwApiLicenseplate;
+use Jdkweb\RdwApi\Enums\Endpoints;
+use Jdkweb\RdwApi\Enums\OutputFormat;
+use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 ...
 RdwApiLicenseplate::make('licenseplate')
     ->label(__('rdw-api::form.licenseplateLabel'))
@@ -66,7 +66,7 @@ Overwrite the config settings
 
 #### Select endpoints for request 
 ```php
-use \Jdkweb\Rdw\Enums\Endpoints;
+use \Jdkweb\RdwApi\Enums\Endpoints;
 ...
 ->setEndpoints(string|array|Endpoints|\Closure)
 
@@ -137,7 +137,7 @@ public function handleForm(string $form): void
 ```
 #### Response
 ```php
-Jdkweb\Rdw\Controllers\RdwApiResponse {#2800 ▼
+Jdkweb\RdwApi\Controllers\RdwApiResponse {#2800 ▼
   +response: array:2 [▶]    // API response
   +request: {#3036 ▶}       // Request vars
   +output: array:2 [▶]      // Formated output when setOutputFormat is used
@@ -151,11 +151,11 @@ See [Response methods](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-ov
 
 Create Filament form
 ```php
-use Jdkweb\Rdw\Enums\Endpoints;
-use Jdkweb\Rdw\Enums\OutputFormat;
-use Jdkweb\Rdw\Filament\Forms\Components\RdwApiLicenseplate;
-use Jdkweb\Rdw\Filament\Forms\Components\RdwApiResponse;
-use Jdkweb\Rdw\Filament\Controllers\RdwApiRequest;
+use Jdkweb\RdwApi\Enums\Endpoints;
+use Jdkweb\RdwApi\Enums\OutputFormat;
+use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
+use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiResponse;
+use Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest;
 ...
 
 /**
@@ -187,7 +187,7 @@ RdwApiLicenseplate::make('licenseplate')
     ->live(true)
     ->afterStateUpdated(function ($state, Forms\Set $set) use ($form) {
 
-        $result = \Jdkweb\Rdw\Filament\Controllers\RdwApiRequest::make()
+        $result = \Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest::make()
             ->setFormData($form)
             ->fetch();
 

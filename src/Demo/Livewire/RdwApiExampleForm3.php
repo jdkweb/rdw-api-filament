@@ -1,13 +1,13 @@
 <?php
 
-namespace Jdkweb\Rdw\Filament\Demo\Livewire;
+namespace Jdkweb\RdwApi\Filament\Demo\Livewire;
 
 use Filament\Forms;
 use Filament\Forms\Form;
-use Jdkweb\Rdw\Enums\Endpoints;
-use Jdkweb\Rdw\Enums\OutputFormat;
-use Jdkweb\Rdw\Controllers\RdwApiResponse;
-use Jdkweb\Rdw\Filament\Forms\Components\RdwApiLicenseplate;
+use Jdkweb\RdwApi\Enums\Endpoints;
+use Jdkweb\RdwApi\Enums\OutputFormat;
+use Jdkweb\RdwApi\Controllers\RdwApiResponse;
+use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 
 trait RdwApiExampleForm3
 {
@@ -34,7 +34,7 @@ trait RdwApiExampleForm3
                             ->live(true)
                             ->afterStateUpdated(function ($state, Forms\Set $set) use ($form) {
 
-                                $result = \Jdkweb\Rdw\Filament\Controllers\RdwApiRequest::make()
+                                $result = \Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest::make()
                                     ->setFormData($form)
                                     ->rdwApiRequest()
                                     ->get();

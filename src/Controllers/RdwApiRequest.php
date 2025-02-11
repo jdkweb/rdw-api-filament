@@ -1,15 +1,15 @@
 <?php
 
-namespace Jdkweb\Rdw\Filament\Controllers;
+namespace Jdkweb\RdwApi\Filament\Controllers;
 
 use Filament\Forms\Form;
-use Jdkweb\Rdw\Exceptions\RdwException;
-use Jdkweb\Rdw\Filament\Forms\Components\RdwApiLicenseplate;
+use Jdkweb\RdwApi\Exceptions\RdwException;
+use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 
-class RdwApiRequest extends \Jdkweb\Rdw\Controllers\RdwApiRequest
+class RdwApiRequest extends \Jdkweb\RdwApi\Controllers\RdwApiRequest
 {
     /**
-     * @var \Jdkweb\Rdw\Filament\Controllers\RdwApiRequest|null
+     * @var \Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest|null
      */
     private static RdwApiRequest|null $instance = null;
 

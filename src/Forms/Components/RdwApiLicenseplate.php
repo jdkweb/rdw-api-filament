@@ -1,12 +1,12 @@
 <?php
 
-namespace Jdkweb\Rdw\Filament\Forms\Components;
+namespace Jdkweb\RdwApi\Filament\Forms\Components;
 
 use Filament\Forms\Components\TextInput;
-use Jdkweb\Rdw\Controllers\RdwApiRequest;
-use Jdkweb\Rdw\Controllers\RdwApiResponse;
-use Jdkweb\Rdw\Enums\Endpoints;
-use Jdkweb\Rdw\Enums\OutputFormat;
+use Jdkweb\RdwApi\Controllers\RdwApiRequest;
+use Jdkweb\RdwApi\Controllers\RdwApiResponse;
+use Jdkweb\RdwApi\Enums\Endpoints;
+use Jdkweb\RdwApi\Enums\OutputFormat;
 
 class RdwApiLicenseplate extends TextInput
 {

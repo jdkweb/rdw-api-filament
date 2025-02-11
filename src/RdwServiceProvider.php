@@ -1,6 +1,6 @@
 <?php
 
-namespace Jdkweb\Rdw\Filament;
+namespace Jdkweb\RdwApi\Filament;
 
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
@@ -17,7 +17,7 @@ class RdwServiceProvider extends ServiceProvider
             // Filament demo routes
             $this->loadRoutesFrom(dirname(__DIR__).'/routes/demo.php');
             // Manually register components
-            Livewire::component('rdw-api-demo', \Jdkweb\Rdw\Filament\Demo\Livewire\RdwApiDemo::class);
+            Livewire::component('rdw-api-demo', \Jdkweb\RdwApi\Filament\Demo\Livewire\RdwApiDemo::class);
         }
     }
 

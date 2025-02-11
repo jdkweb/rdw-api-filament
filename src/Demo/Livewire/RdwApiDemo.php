@@ -1,13 +1,13 @@
 <?php
 
-namespace Jdkweb\Rdw\Filament\Demo\Livewire;
+namespace Jdkweb\RdwApi\Filament\Demo\Livewire;
 
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Jdkweb\Rdw\Controllers\RdwApiResponse;
-//use Jdkweb\Rdw\Filament\Controllers\RdwApiRequest;
-use Jdkweb\Rdw\Enums\OutputFormat;
-use Jdkweb\Rdw\Filament\Controllers\RdwApiRequest;
+use Jdkweb\RdwApi\Controllers\RdwApiResponse;
+//use Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest;
+use Jdkweb\RdwApi\Enums\OutputFormat;
+use Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
 
