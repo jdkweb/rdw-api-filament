@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Jdkweb\\RdwApi\\Filament\\": "src/",
+            "Jdkweb\\RdwApi\\Filament\\": "src/"
         }
     },
     "authors": [
@@ -15,8 +15,8 @@
         }
     ],
     "require": {
-        "php": "^8.0",
-        "jdkweb/rdw-api": "^1.0.0",
+        "php": "^8.1",
+        "jdkweb/rdw-api": "^1.0.1",
         "filament/filament": "^3.0"
     },
     "extra": {
