@@ -6,28 +6,8 @@ use Filament\Forms\Form;
 use Jdkweb\RdwApi\Exceptions\RdwException;
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 
-class RdwApiRequest extends \Jdkweb\RdwApi\Controllers\RdwApiRequest
+class RdwApiRequest
 {
-    /**
-     * @var \Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest|null
-     */
-    private static RdwApiRequest|null $instance = null;
-
-    /**
-     * Overwrite parent class
-     *
-     * @return static
-     */
-    public static function make(): static
-    {
-        // Singleton
-        if (is_null(self::$instance)) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
-
     /**
      * Get settings from the filament form
      *

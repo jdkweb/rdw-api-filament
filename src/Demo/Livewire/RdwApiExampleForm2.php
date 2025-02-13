@@ -39,7 +39,7 @@ trait RdwApiExampleForm2
                         ->live(true)
                         ->afterStateUpdated(function ($state, Forms\Set $set) use ($form) {
 
-                            $result = \Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest::make()
+                            $result = \Jdkweb\RdwApi\Controllers\RdwApiRequest::make()
                                 ->setFormData($form)
                                 //->setApi(0)
                                 ->fetch();
