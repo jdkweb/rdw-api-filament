@@ -36,8 +36,7 @@ trait RdwApiExampleForm3
 
                                 $result = \Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest::make()
                                     ->setFormData($form)
-                                    ->rdwApiRequest()
-                                    ->get();
+                                    ->fetch();
 
                                 if ($result->status === false) {
                                     return;
