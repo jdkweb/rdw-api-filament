@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Jdkweb\\RdwApi\\Filament\\": "src/"
+            "Jdkweb\\RdwApi\\Filament\\": "src/",
         }
     },
     "authors": [
