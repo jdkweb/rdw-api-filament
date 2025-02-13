@@ -30,8 +30,8 @@ Github: [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-
 Packagist: [jdkweb/rdw-api](https://packagist.org/packages/jdkweb/rdw-api)
 
 # Usage
-- [Filament FormField: RdwApiRequest](#formfield)
-- [Response: RdwApiResponse](#response)
+- [Filament FormField](#formfield)
+- [RDW Response on Licensplate](#response)
  
 ## <a name="formfield"></a>Form Field
 ### Basic usage
@@ -133,7 +133,8 @@ Available:
 ->licenseplateStyle('taxi')  // blue taxi plate 
 ```
 
-### <a title="response"></a>Handle response
+### <a title="response"></a>Handle RDW response
+RDW API request with to filament form data 
 ```php
 public function handleForm(string $form): void
 {
@@ -142,6 +143,7 @@ public function handleForm(string $form): void
         ->fetch();
 ```
 #### Response
+Response data form the RDW API request in $result:
 ```php
 Jdkweb\RdwApi\Controllers\RdwApiResponse {#2800 ▼
   +response: array:2 [▶]    // API response
@@ -150,7 +152,7 @@ Jdkweb\RdwApi\Controllers\RdwApiResponse {#2800 ▼
   +status: true
 }
 ```
-See [Response methods](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-ov-file#response)
+See rdw-api for the [response methods](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-ov-file#response)
 
 ## Example
 ![filament setup](./images/rdw-api-filament2.webp)
@@ -159,9 +161,9 @@ Create Filament form
 ```php
 use Jdkweb\RdwApi\Enums\Endpoints;
 use Jdkweb\RdwApi\Enums\OutputFormat;
+use Jdkweb\RdwApi\Controllers\RdwApiRequest;
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiResponse;
-use Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest;
 ...
 
 /**
@@ -178,6 +180,8 @@ Forms\Components\Select::make('datasets')
     ->hintAction(selectAllDatasets())   // Helper function for select all link
     ->reactive() // Enables reactivity
     ->required(),
+    
+//-----------------------------------------------------------------------------    
 
 /**
  * Licenseplate
@@ -193,7 +197,7 @@ RdwApiLicenseplate::make('licenseplate')
     ->live(true)
     ->afterStateUpdated(function ($state, Forms\Set $set) use ($form) {
 
-        $result = \Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest::make()
+        $result = \Jdkweb\RdwApi\Controllers\RdwApiRequest::make()
             ->setFormData($form)
             ->fetch();
 
@@ -208,9 +212,11 @@ RdwApiLicenseplate::make('licenseplate')
         // $set('aslast', $result->quickSearch('2.wettelijk_toegestane_maximum_aslast')); // second axle       
         // ...    
     }),    
+    
+//-----------------------------------------------------------------------------    
 
 /**
- * Output format selectbox 
+ * Selectbox for the output format 
  */    
 Forms\Components\Select::make('output_format')
     ->label(__('rdw-api::form.formatLabel'))
