@@ -19,7 +19,7 @@ This package extends [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=read
 
 
 ## Installation
-Requires PHP 8.2 and Laravel 10 and Filament 3 or higher \
+Requires PHP 8.1 and Laravel 10 and Filament 3.0 or higher \
 Install the package via composer:
 ```bash
 composer require jdkweb/rdw-api-filament
