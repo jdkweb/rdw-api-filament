@@ -30,6 +30,10 @@ Install the package via composer:
 composer require jdkweb/rdw-api-filament
 ```
 ## Translation
+Translations available:
+- [Dutch (nl)](https://github.com/jdkweb/rdw-api/tree/main/lang/nl)
+- [English (en)](https://github.com/jdkweb/rdw-api/tree/main/lang/en)
+
 See:\
 Github: [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-ov-file#translation) \
 Packagist: [jdkweb/rdw-api](https://packagist.org/packages/jdkweb/rdw-api)
