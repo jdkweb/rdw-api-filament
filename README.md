@@ -39,8 +39,8 @@ Github: [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-
 Packagist: [jdkweb/rdw-api](https://packagist.org/packages/jdkweb/rdw-api)
 
 # Usage
-- [Filament FormField](#formfield)
-- [RDW Response on Licensplate](#response)
+- [Form Field](#formfield)
+- [RDW Response](#response)
  
 ## <a name="formfield"></a>Form Field
 ### Basic usage
@@ -151,7 +151,7 @@ public function handleForm(string $form): void
         ->setFormData($this->form)
         ->fetch();
 ```
-#### Response
+#### RDW Response
 Response data form the RDW API request in $result:
 ```php
 Jdkweb\RdwApi\Controllers\RdwApiResponse {#2800 ▼
