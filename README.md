@@ -2,13 +2,15 @@
 
 Laravel wrapper for the Dutch open mobility data. Basic Vehicle Registration All non-sensitive data of the Dutch vehicle fleet. 
 
-Laravel application to get vehicle information from [opendata.rdw.nl](https://opendata.rdw.nl) or [overheid.io](https://overheid.io). \
+Laravel application to get vehicle information from [opendata.rdw.nl](https://opendata.rdw.nl) or [overheid.io](https://overheid.io). 
 
-Depends on: \  
+This package extends [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=readme-ov-file#demo) to be used in [Filament](https://filamentphp.com/). 
+
+Depends on:   
 Github: [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api) \
 packagist: [jdkweb/rdw-api](https://packagist.org/packages/jdkweb/rdw-api)
 
-This package extends [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=readme-ov-file#demo) to be used in [Filament](https://filamentphp.com/)
+
 
 ## Table of contents
 
