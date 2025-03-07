@@ -273,5 +273,5 @@ Two options to use the demo:
 
 ### Demo url
 ```html
-http://[domainname]/rdw-api/demo
+http://[domainname]/rdw-api/demo 
 ```
