@@ -5,7 +5,7 @@ namespace Jdkweb\RdwApi\Filament\Demo\Livewire;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Jdkweb\RdwApi\Controllers\RdwApiResponse;
-use Jdkweb\RdwApi\Enums\OutputFormat;
+use Jdkweb\RdwApi\Filament\Enums\OutputFormat;
 use Jdkweb\RdwApi\Controllers\RdwApiRequest;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
