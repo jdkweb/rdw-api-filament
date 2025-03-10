@@ -5,8 +5,9 @@ namespace Jdkweb\RdwApi\Filament\Controllers;
 use Filament\Forms\Form;
 use Jdkweb\RdwApi\Exceptions\RdwException;
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
+use Jdkweb\RdwApi\Controllers\RdwApiRequest as BaseController;
 
-class RdwApiRequest
+class RdwApiRequest extends BaseController
 {
     /**
      * Get settings from the filament form
