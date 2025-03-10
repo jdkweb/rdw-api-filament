@@ -57,7 +57,7 @@ RdwApiLicenseplate::make('licenseplate')
 - All RDW endpoints are selected
 ### All options used
 ```php
-use Jdkweb\RdwApi\Enums\Endpoints;
+use Jdkweb\RdwApi\Filament\Enums\Endpoints;
 use Jdkweb\RdwApi\Filament\Enums\OutputFormat;
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 ...
@@ -168,7 +168,7 @@ See rdw-api for the [response methods](https://github.com/jdkweb/rdw-api/tree/ma
 
 Create Filament form
 ```php
-use Jdkweb\RdwApi\Enums\Endpoints;
+use Jdkweb\RdwApi\Filament\Enums\Endpoints;
 use Jdkweb\RdwApi\Filament\Enums\OutputFormat;
 use Jdkweb\RdwApi\Controllers\RdwApiRequest;
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;

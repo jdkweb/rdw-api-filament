@@ -5,7 +5,7 @@ namespace Jdkweb\RdwApi\Filament\Forms\Components;
 use Filament\Forms\Components\TextInput;
 use Jdkweb\RdwApi\Controllers\RdwApiRequest;
 use Jdkweb\RdwApi\Controllers\RdwApiResponse;
-use Jdkweb\RdwApi\Enums\Endpoints;
+use Jdkweb\RdwApi\Filament\Enums\Endpoints;
 use Jdkweb\RdwApi\Filament\Enums\OutputFormat;
 
 class RdwApiLicenseplate extends TextInput
