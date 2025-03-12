@@ -5,8 +5,9 @@ namespace Jdkweb\RdwApi\Filament\Demo\Livewire;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Jdkweb\RdwApi\Controllers\RdwApiResponse;
-use Jdkweb\RdwApi\Filament\Enums\OutputFormat;
-use Jdkweb\RdwApi\Controllers\RdwApiRequest;
+use Jdkweb\RdwApi\Enums\OutputFormat;
+use Jdkweb\RdwApi\Filament\Enums\OutputFormats;
+use Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
 
@@ -128,13 +129,13 @@ class RdwApiDemo extends Component implements HasForms
     protected function livewireOutput(RdwApiResponse $data): void
     {
         switch ($data->request->outputformat) {
-            case OutputFormat::XML:
+            case OutputFormats::XML:
                 $this->livewire_results = view(
                     'rdw_views::components.xml',
                     ['results' => $data->toXml(true)]
                 );
                 break;
-            case OutputFormat::JSON:
+            case OutputFormats::JSON:
                 $this->livewire_results = view(
                     'rdw_views::components.json',
                     ['noscript' => true]

@@ -56,9 +56,10 @@ RdwApiLicenseplate::make('licenseplate')
 - Request to the active API (default: opendata.rdw.nl) \
 - All RDW endpoints are selected
 ### All options used
+
 ```php
 use Jdkweb\RdwApi\Filament\Enums\Endpoints;
-use Jdkweb\RdwApi\Filament\Enums\OutputFormat;
+use Jdkweb\RdwApi\Filament\Enums\OutputFormats;
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 ...
 RdwApiLicenseplate::make('licenseplate')
@@ -66,7 +67,7 @@ RdwApiLicenseplate::make('licenseplate')
     ->default('155GV3')    
     ->setApi(1)
     ->setEndpoints(Endpoints::cases())    
-    ->setOutputformat(OutputFormat::ARRAY)    
+    ->setOutputformat(OutputFormats::ARRAY)    
     ->setLanguage('en')
     ->licenseplateStyle() 
 ```
@@ -79,7 +80,8 @@ Overwrite the config settings
 - 0 or 'opendata' for using the RDW API opendata.rdw.nl **[default]**
 - 1 or 'overheidio' for using the overheid.io API
 
-#### Select endpoints for request 
+#### Select endpoints for request
+
 ```php
 use \Jdkweb\RdwApi\Enums\Endpoints;
 ...
@@ -167,9 +169,10 @@ See rdw-api for the [response methods](https://github.com/jdkweb/rdw-api/tree/ma
 ![filament setup](./images/rdw-api-filament2.webp)
 
 Create Filament form
+
 ```php
 use Jdkweb\RdwApi\Filament\Enums\Endpoints;
-use Jdkweb\RdwApi\Filament\Enums\OutputFormat;
+use Jdkweb\RdwApi\Filament\Enums\OutputFormats;
 use Jdkweb\RdwApi\Controllers\RdwApiRequest;
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiResponse;
@@ -230,8 +233,8 @@ RdwApiLicenseplate::make('licenseplate')
 Forms\Components\Select::make('output_format')
     ->label(__('rdw-api::form.formatLabel'))
     ->required()
-    ->default(OutputFormat::XML)
-    ->options(OutputFormat::class)
+    ->default(OutputFormats::XML)
+    ->options(OutputFormats::class)
     ->reactive() // Enables reactivity
 ```
 Handle Form data

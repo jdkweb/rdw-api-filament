@@ -5,7 +5,7 @@ namespace Jdkweb\RdwApi\Filament\Demo\Livewire;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Jdkweb\RdwApi\Filament\Enums\Endpoints;
-use Jdkweb\RdwApi\Filament\Enums\OutputFormat;
+use Jdkweb\RdwApi\Filament\Enums\OutputFormats;
 use Jdkweb\RdwApi\Controllers\RdwApiResponse;
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 
@@ -27,14 +27,14 @@ trait RdwApiExampleForm3
                         RdwApiLicenseplate::make('taxiplate')
                             ->label(__('rdw-api::form.licenseplateLabel'))
                             ->setEndpoints(fn(Forms\Get $get): array => $get('taxidataset_disabled'))
-                            ->setOutputformat(fn(Forms\Get $get): OutputFormat => $get('output_disabled'))
+                            ->setOutputformat(fn(Forms\Get $get): OutputFormats => $get('output_disabled'))
                             ->required()
                             ->setLanguage(fn($get) => app()->getLocale())
                             ->licenseplateStyle('taxi')
                             ->live(true)
                             ->afterStateUpdated(function ($state, Forms\Set $set) use ($form) {
 
-                                $result = \Jdkweb\RdwApi\Controllers\RdwApiRequest::make()
+                                $result = \Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest::make()
                                     ->setFormData($form)
                                     ->fetch();
 
@@ -60,8 +60,8 @@ trait RdwApiExampleForm3
                             ->label(__('rdw-api::form.formatLabel'))
                             ->disabled(true)
                             ->required()
-                            ->default(OutputFormat::XML)
-                            ->options(OutputFormat::class)
+                            ->default(OutputFormats::XML)
+                            ->options(OutputFormats::class)
                             ->reactive(),
                     ])
             ])->statePath('exampleForm3Data');

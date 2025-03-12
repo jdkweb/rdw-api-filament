@@ -4,11 +4,41 @@ namespace Jdkweb\RdwApi\Filament\Controllers;
 
 use Filament\Forms\Form;
 use Jdkweb\RdwApi\Exceptions\RdwException;
+use Jdkweb\RdwApi\Filament\Enums\Endpoints;
+use Jdkweb\RdwApi\Enums\Interface\Endpoint;
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 use Jdkweb\RdwApi\Controllers\RdwApiRequest as BaseController;
 
 class RdwApiRequest extends BaseController
 {
+
+    public static function make(): static
+    {
+        // Singleton
+        if (is_null(self::$instance)) {
+            self::$instance = new self();
+            // Default settings
+            self::$instance->endpoints = Endpoints::cases();
+            self::$instance->language = app()->getLocale();
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Endpoints used for the request
+     *
+     * @param  array  $endpoints
+     * @return $this
+     */
+    public function setEndpoints(array $endpoints = []): static
+    {
+        $this->endpoints = array_map(function ($endpoint) {
+            return ($endpoint instanceof Endpoint ? $endpoint : Endpoints::getCase($endpoint));
+        }, $endpoints);
+        return $this;
+    }
+
     /**
      * Get settings from the filament form
      *

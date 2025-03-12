@@ -5,7 +5,7 @@ namespace Jdkweb\RdwApi\Filament\Demo\Livewire;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Jdkweb\RdwApi\Filament\Enums\Endpoints;
-use Jdkweb\RdwApi\Filament\Enums\OutputFormat;
+use Jdkweb\RdwApi\Filament\Enums\OutputFormats;
 use Jdkweb\RdwApi\Controllers\RdwApiResponse;
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 
@@ -45,8 +45,8 @@ trait RdwApiExampleForm1
                         Forms\Components\Select::make('output_format')
                             ->label(__('rdw-api::form.formatLabel'))
                             ->required()
-                            ->default(OutputFormat::XML)
-                            ->options(OutputFormat::class)
+                            ->default(OutputFormats::XML)
+                            ->options(OutputFormats::class)
                             ->reactive() // Enables reactivity
                     ])
             ])->statePath('exampleForm1Data');

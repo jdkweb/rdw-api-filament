@@ -5,8 +5,10 @@ namespace Jdkweb\RdwApi\Filament\Forms\Components;
 use Filament\Forms\Components\TextInput;
 use Jdkweb\RdwApi\Controllers\RdwApiRequest;
 use Jdkweb\RdwApi\Controllers\RdwApiResponse;
-use Jdkweb\RdwApi\Filament\Enums\Endpoints;
-use Jdkweb\RdwApi\Filament\Enums\OutputFormat;
+use Jdkweb\RdwApi\Enums\Endpoints;
+use Jdkweb\RdwApi\Enums\Interface\Endpoint;
+use Jdkweb\RdwApi\Enums\Interface\OutputFormat;
+use Jdkweb\RdwApi\Filament\Enums\OutputFormats;
 
 class RdwApiLicenseplate extends TextInput
 {
@@ -22,7 +24,7 @@ class RdwApiLicenseplate extends TextInput
 
     protected string|OutputFormat|\Closure|null $outputFormat = '';
 
-    protected string|array|Endpoints|\Closure $endpoints = [];
+    protected string|array|Endpoint|\Closure $endpoints = [];
 
     protected string|\Closure|null $language = 'nl';
 
@@ -81,7 +83,7 @@ class RdwApiLicenseplate extends TextInput
 
     //------------------------------------------------------------------------------------------------------------------
 
-    public function setEndpoints(string|array|Endpoints|\Closure $endpoints): static
+    public function setEndpoints(string|array|Endpoint|\Closure $endpoints): static
     {
         if(is_string($endpoints)) {
             $endpoints = [$endpoints];
@@ -99,7 +101,7 @@ class RdwApiLicenseplate extends TextInput
 
         // check default settings
         foreach ($this->endpoints as $key => $endpoints) {
-            if ($endpoints instanceof Endpoints) {
+            if ($endpoints instanceof Endpoint) {
                 $this->endpoints[$key] = $endpoints;
             }
         }
@@ -128,7 +130,7 @@ class RdwApiLicenseplate extends TextInput
         $format = $this->evaluate($this->outputFormat);
 
         // check after evaluate
-        if (!in_array($format, OutputFormat::cases())) {
+        if (!in_array($format, OutputFormats::cases())) {
             $format = null; //OutputFormat::ARRAY;
         }
 

@@ -6,7 +6,7 @@ use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Jdkweb\RdwApi\Filament\Enums\Endpoints;
-use Jdkweb\RdwApi\Filament\Enums\OutputFormat;
+use Jdkweb\RdwApi\Filament\Enums\OutputFormats;
 use Jdkweb\RdwApi\Controllers\RdwApiResponse;
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 
@@ -34,12 +34,12 @@ trait RdwApiExampleForm2
                             Endpoints::FUEL,
                             Endpoints::AXLES
                         ])
-                        ->setOutputformat(fn() => OutputFormat::JSON)
+                        ->setOutputformat(fn() => OutputFormats::JSON)
                         ->licenseplateStyle()
                         ->live(true)
                         ->afterStateUpdated(function ($state, Forms\Set $set) use ($form) {
 
-                            $result = \Jdkweb\RdwApi\Controllers\RdwApiRequest::make()
+                            $result = \Jdkweb\RdwApi\Filament\Controllers\RdwApiRequest::make()
                                 ->setFormData($form)
                                 //->setApi(0)
                                 ->fetch();
