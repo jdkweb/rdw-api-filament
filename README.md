@@ -1,5 +1,11 @@
 # RDW API extension for Filament
 
+![Packagist Version](https://img.shields.io/packagist/v/jdkweb/rdw-api-filament)
+![Static Badge](https://img.shields.io/badge/build-%20%3E%3D%208.1-brightgreen?style=flat&logo=php&logoSize=16&label=PHP) 
+![Static Badge](https://img.shields.io/badge/build-%20%3E%3D%2010-slategray?style=flat-square&logo=laravel&logoColor=white&logoSize=16&label=Laravel)
+![Static Badge](https://img.shields.io/badge/build-%20%3E%3D%203.0-blue?style=flat-square&logo=laravel&logoColor=white&logoSize=16&label=Filament)
+[![Packagist Dependency Version](https://img.shields.io/packagist/dependency-v/jdkweb/rdw-api-filament/jdkweb%2Frdw-api)](https://packagist.org/packages/jdkweb/rdw-api)
+
 Laravel wrapper for the Dutch open mobility data. Basic Vehicle Registration All non-sensitive data of the Dutch vehicle fleet. 
 
 Laravel application to get vehicle information from [opendata.rdw.nl](https://opendata.rdw.nl) or [overheid.io](https://overheid.io). 
@@ -7,8 +13,8 @@ Laravel application to get vehicle information from [opendata.rdw.nl](https://op
 This package extends [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=readme-ov-file#demo) to be used in [Filament](https://filamentphp.com/). 
 
 Depends on:   
-Github: [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api) \
-packagist: [jdkweb/rdw-api](https://packagist.org/packages/jdkweb/rdw-api)
+Github: [![Github Dependency Version](https://img.shields.io/packagist/dependency-v/jdkweb/rdw-api-filament/jdkweb%2Frdw-api)](https://github.com/jdkweb/rdw-api)\
+packagist: [![Packagist Dependency Version](https://img.shields.io/packagist/dependency-v/jdkweb/rdw-api-filament/jdkweb%2Frdw-api)](https://packagist.org/packages/jdkweb/rdw-api)
 
 
 
