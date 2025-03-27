@@ -44,7 +44,7 @@ Packagist: [jdkweb/rdw-api](https://packagist.org/packages/jdkweb/rdw-api)
  
 ## <a name="formfield"></a>Form Field
 ### Basic usage
-![filament setup](./images/rdw-api-filament1.webp)
+![filament setup](https://www.jdkweb.nl/git/images/rdw-api-filament1.webp)
 ```php
 use Jdkweb\RdwApi\Filament\Forms\Components\RdwApiLicenseplate;
 ...
