@@ -1,6 +1,14 @@
 {
     "name": "jdkweb/rdw-api-filament",
     "description": "Filament extension for rdw-api. rdw-api is a wrapper for RDW API",
+    "keywords": [
+        "php",
+        "laravel",
+        "filament",
+        "api",
+        "rdw",
+        "overheid.io"
+    ],
     "type": "library",
     "license": "GPL-3.0-or-later",
     "autoload": {
