@@ -12,7 +12,7 @@ Laravel application to get vehicle information from [opendata.rdw.nl](https://op
 
 This package extends [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=readme-ov-file#demo) to be used in [Filament](https://filamentphp.com/). 
 
-Depends on:   
+Depends on:
 [![Static Badge](https://img.shields.io/badge/build-jdkweb%2Frdw--api-blue?style=flat-square&logo=github&label=Github)](https://github.com/jdkweb/rdw-api)
 [![Static Badge](https://img.shields.io/badge/build-jdkweb%2Frdw--api-blue?style=flat-square&logo=packagist&logoColor=white&label=Packagist)](https://packagist.org/packages/jdkweb/rdw-api)
 
@@ -40,7 +40,7 @@ Translations available:
 - [Dutch (nl)](https://github.com/jdkweb/rdw-api/tree/main/lang/nl)
 - [English (en)](https://github.com/jdkweb/rdw-api/tree/main/lang/en)
 
-See:\
+See: 
 [![Static Badge](https://img.shields.io/badge/build-jdkweb%2Frdw--api-blue?style=flat-square&logo=github&label=Github)](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-ov-file#translation) 
 [![Static Badge](https://img.shields.io/badge/build-jdkweb%2Frdw--api-blue?style=flat-square&logo=packagist&logoColor=white&label=Packagist)](https://packagist.org/packages/jdkweb/rdw-api)
 
