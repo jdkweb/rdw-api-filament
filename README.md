@@ -4,7 +4,7 @@
 [![Static Badge](https://img.shields.io/badge/build-%20%3E%3D%208.1-brightgreen?style=flat&logo=php&logoSize=16&label=PHP)](https://github.com/jdkweb/rdw-api-filament) 
 [![Static Badge](https://img.shields.io/badge/build-%20%3E%3D%2010-slategray?style=flat-square&logo=laravel&logoColor=white&logoSize=16&label=Laravel)](https://github.com/jdkweb/rdw-api-filament)
 [![Static Badge](https://img.shields.io/badge/build-%20%3E%3D%203.0-blue?style=flat-square&logo=laravel&logoColor=white&logoSize=16&label=Filament)](https://github.com/jdkweb/rdw-api-filament)
-[![Packagist Dependency Version](https://img.shields.io/packagist/dependency-v/jdkweb/rdw-api-filament/jdkweb%2Frdw-api)](https://packagist.org/packages/jdkweb/rdw-api)
+[![Static Badge](https://img.shields.io/badge/build-jdkweb%2Frdw--api-blue?style=flat-square&logo=packagist&logoColor=white&label=Packagist)](https://packagist.org/packages/jdkweb/rdw-api)
 
 Laravel wrapper for the Dutch open mobility data. Basic Vehicle Registration All non-sensitive data of the Dutch vehicle fleet. 
 
