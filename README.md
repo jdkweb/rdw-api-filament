@@ -13,8 +13,8 @@ Laravel application to get vehicle information from [opendata.rdw.nl](https://op
 This package extends [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api?tab=readme-ov-file#demo) to be used in [Filament](https://filamentphp.com/). 
 
 Depends on:   
-Github: [![Github Dependency Version](https://img.shields.io/packagist/dependency-v/jdkweb/rdw-api-filament/jdkweb%2Frdw-api)](https://github.com/jdkweb/rdw-api)\
-packagist: [![Packagist Dependency Version](https://img.shields.io/packagist/dependency-v/jdkweb/rdw-api-filament/jdkweb%2Frdw-api)](https://packagist.org/packages/jdkweb/rdw-api)
+[![Static Badge](https://img.shields.io/badge/build-jdkweb%2Frdw--api-blue?style=flat-square&logo=github&label=Github)](https://github.com/jdkweb/rdw-api)
+[![Static Badge](https://img.shields.io/badge/build-jdkweb%2Frdw--api-blue?style=flat-square&logo=packagist&logoColor=white&label=Packagist)](https://packagist.org/packages/jdkweb/rdw-api)
 
 
 
@@ -41,8 +41,8 @@ Translations available:
 - [English (en)](https://github.com/jdkweb/rdw-api/tree/main/lang/en)
 
 See:\
-Github: [jdkweb/rdw-api](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-ov-file#translation) \
-Packagist: [jdkweb/rdw-api](https://packagist.org/packages/jdkweb/rdw-api)
+[![Static Badge](https://img.shields.io/badge/build-jdkweb%2Frdw--api-blue?style=flat-square&logo=github&label=Github)](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-ov-file#translation) 
+[![Static Badge](https://img.shields.io/badge/build-jdkweb%2Frdw--api-blue?style=flat-square&logo=packagist&logoColor=white&label=Packagist)](https://packagist.org/packages/jdkweb/rdw-api)
 
 # Usage
 - [Form Field](#formfield)
