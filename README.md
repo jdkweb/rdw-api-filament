@@ -166,7 +166,7 @@ Jdkweb\RdwApi\Controllers\RdwApiResponse {#2800 ▼
 See rdw-api for the [response methods](https://github.com/jdkweb/rdw-api/tree/main?tab=readme-ov-file#response)
 
 ## Example
-![filament setup](./images/rdw-api-filament2.webp)
+![filament setup](https://www.jdkweb.nl/git/images/rdw-api-filament2.webp)
 
 Create Filament form
 
